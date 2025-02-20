@@ -150,7 +150,10 @@ These enhancements improve document management by providing powerful search capa
 🔑 How It Works:
 	•	Users enter a search query in the frontend (e.g., employeeId:ABC-12345).
 	•	The frontend sends a request:
+```typescript
 GET /api/search?q=employeeId:ABC-12345
+```
+
 	•	The backend parses the query, extracts filters, and searches for matching records.
 	•	Filtered results are sent back to the frontend for display.
 
