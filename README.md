@@ -120,4 +120,85 @@ While you may use AI tools like ChatGPT or GitHub Copilot for assistance, ensure
 
 ## Documentation  
 
-Your **detailed documentation** should go here, outlining how you approached each challenge. The more detailed, the better—it helps us understand your thought process and decision-making.  
+Challenge: Implement an Advanced Search and File Upload System
+
+📌 Overview
+
+The goal of this challenge was to enhance the Results Page by implementing two key functionalities:
+	1.	Advanced Search API - Allows users to search for documents using complex search criteria (e.g., field-specific searches, exact phrase matching, and numeric range filters).
+	2.	File Upload API - Enables users to upload PDF, CSV, and TXT files, process their contents, and return extracted data.
+
+These enhancements improve document management by providing powerful search capabilities and automated data processing for uploaded files.
+
+💡 Solution Breakdown
+
+🔹 Part 1: Advanced Search System
+
+🎯 Challenge:
+	•	Users needed a way to search documents using advanced queries.
+	•	The system had to support:
+✅ Exact phrase search ("John Doe")
+✅ Field-based search (employeeId:ABC-12345)
+✅ Numeric range filters (salary:40000..60000)
+	•	The search had to be efficient and work in real-time with the Results Page.
+
+🛠️ Solution:
+	•	Implemented a new /api/search endpoint in the Express server.
+	•	Used regular expressions (RegEx) to parse user queries into structured filters.
+	•	Applied these filters to the in-memory submissions dataset to return matching results.
+
+🔑 How It Works:
+	•	Users enter a search query in the frontend (e.g., employeeId:ABC-12345).
+	•	The frontend sends a request:
+GET /api/search?q=employeeId:ABC-12345
+	•	The backend parses the query, extracts filters, and searches for matching records.
+	•	Filtered results are sent back to the frontend for display.
+
+🚀 Key Achievements:
+
+✅ Users can search using natural and structured queries.
+✅ The system supports exact matches, field-based filters, and numeric ranges.
+✅ Real-time updates ensure a smooth user experience.
+
+🔹 Part 2: File Upload and Processing System
+
+🎯 Challenge:
+	•	Users needed a way to upload files (PDFs, CSVs, and TXT files) and extract data from them.
+	•	The system had to:
+✅ Accept only valid file types.
+✅ Process each file type correctly (e.g., extract text from PDFs, parse CSVs).
+✅ Provide clear error handling if an invalid file is uploaded.
+
+🛠️ Solution:
+	•	Implemented a Multer-based file upload system in Express.
+	•	Set a 10MB file limit and restricted uploads to PDF, CSV, and TXT formats.
+	•	Used pdf-parse for PDF extraction, csv-parser for CSV parsing, and fs (File System) for reading TXT files.
+
+🔑 How It Works:
+	1.	Users upload a file through the frontend.
+	2.	The file is stored in the uploads/ directory.
+	3.	The backend detects the file type and processes it accordingly:
+	•	PDF: Extracts text using pdf-parse.
+	•	CSV: Parses rows using csv-parser.
+	•	TXT: Reads file contents directly.
+	4.	The extracted data is returned to the user, and the file is deleted from the server.
+
+🚀 Key Achievements:
+
+✅ Users can upload multiple file types (PDF, CSV, TXT).
+✅ The system automatically extracts and processes file data.
+✅ Efficient error handling ensures only valid files are accepted.
+
+🎯 Why This Approach?
+
+1️⃣ Simplicity & Performance
+	•	Used in-memory filtering for fast search without requiring a database.
+	•	File processing is handled asynchronously to avoid blocking server operations.
+
+2️⃣ Scalability & Flexibility
+	•	The search system can easily be extended to support new fields.
+	•	The upload system can be modified to store files permanently or process new file formats.
+
+3️⃣ User Experience & Error Handling
+	•	Real-time filtering improves search speed.
+	•	Clear error messages ensure users understand what went wrong.
